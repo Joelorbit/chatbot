@@ -1,257 +1,268 @@
-/* Ensure body takes full viewport height */
+/* --- Minimal Modern Figma-Inspired Redesign --- */
+
+/* General Reset & Font */
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  font-family: 'Roboto', 'Inter', Arial, sans-serif;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+  color: #222;
   overflow: hidden;
-  background: #4a4a4a; /* Blackish-gray background for the front page */
 }
 
-/* blue mark css */
+/* Start Page */
+.start-chat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: transparent;
+  gap: 40px;
+}
+
+.names-container, .start-container {
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 8px 32px rgba(60,60,120,0.08);
+  border-radius: 18px;
+  padding: 36px 32px;
+  min-width: 320px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+
+.names-container h2, .start-container h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  letter-spacing: -1px;
+  color: #2d2d2d;
+}
+
+.names-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.names-list a {
+  color: #6b3e7c;
+  font-size: 1.15rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 0;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.names-list a:hover {
+  background: #f3e8ff;
+  color: #4a2563;
+}
+
+.start-container p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 32px;
+  color: #555;
+}
+
+#start-btn {
+  background: linear-gradient(135deg, #6b3e7c 60%, #d8a7b1 100%);
+  border: none;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  color: #fff;
+  font-size: 2.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(107,62,124,0.12);
+  transition: background 0.2s, transform 0.2s;
+}
+#start-btn:hover {
+  background: linear-gradient(135deg, #d8a7b1 60%, #6b3e7c 100%);
+  transform: scale(1.08);
+}
+
+/* Chat Page */
 .chatbot {
   display: none;
   flex-direction: column;
-  height: 100vh; /* Fill the entire viewport */
+  height: 100vh;
   width: 100vw;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  background: #ffffff; /* White background for the chat */
-  transition: opacity 0.3s ease;
+  background: rgba(255,255,255,0.98);
+  transition: opacity 0.3s;
 }
 
-/* Style the header */
 .chatbot header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background: #f5f5f5;
-  border-bottom: 1px solid #ddd;
+  padding: 18px 32px;
+  background: transparent;
+  border-bottom: 1px solid #ececec;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.03);
 }
 
 .chatbot header h2 {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #6b3e7c;
+  letter-spacing: -0.5px;
 }
 
 .chatbot .close-btn {
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 2rem;
   cursor: pointer;
-  color: #666;
-  padding: 5px;
-  transition: color 0.3s ease;
+  color: #bdbdbd;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
 }
-
 .chatbot .close-btn:hover {
-  color: #000;
+  background: #f3e8ff;
+  color: #6b3e7c;
 }
 
-/* Chatbox should grow and scroll */
 .chatbot .chatbox {
   flex: 1 1 auto;
   overflow-y: auto;
-  padding: 30px 20px 20px;
+  padding: 32px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-/* Input stays at the very bottom and covers the gray background */
+/* Message Bubbles */
+.chatbox .outgoing p,
+.chatbox .incoming .response-text {
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  max-width: 70%;
+  margin: 0;
+  line-height: 1.6;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.06);
+}
+
+.chatbox .outgoing p {
+  background: linear-gradient(135deg, #e0e7ef 60%, #f8fafc 100%);
+  color: #222;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.chatbox .incoming .response-text {
+  background: #f3e8ff;
+  color: #4a2563;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+  border: 1px solid #e3d0f7;
+}
+
+.chatbox .incoming .code-block {
+  background: #23272e;
+  color: #f5f5f5;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 0.98rem;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.08);
+  overflow-x: auto;
+}
+
+/* Chat Input */
 .chatbot .chat-input {
   position: sticky;
   bottom: 0;
   width: 100%;
-  background: #ffffff; /* White background to match chat */
-  padding: 10px 20px;
-  border-top: 1px solid #ddd;
+  background: transparent;
+  padding: 18px 32px;
+  border-top: 1px solid #ececec;
   display: flex;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* Add shadow to cover any gray bleed */
+  box-shadow: none;
 }
 
-/* Adjust height handling for chat input */
 .chat-input textarea {
-  flex-grow: 1;
-  height: 50px;
-  resize: none;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
+  flex: 1 1 auto;
+  height: 40px;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 1.05rem;
+  border: 1.5px solid #6b3e7c;
   outline: none;
   background: #fff;
+  color: #222;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.04);
+  margin-right: 8px;
+  resize: none;
+  max-width: 85%; /* Reduced width to make room for the button */
 }
 
-/* Reverse chat alignment: you on left, bot on right */
-.chatbox .outgoing {
-  justify-content: flex-start;
-}
-
-.chatbox .incoming {
-  justify-content: flex-end;
-}
-
-/* Style the message bubbles */
-.chatbox .outgoing p {
-  background: #d1eaff;
-  color: #000;
-  border: 1px solid #90caf9;
-  border-radius: 10px 10px 10px 0;
-  padding: 10px 15px;
-  max-width: 70%;
-  margin: 5px 0;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.chatbox .incoming .response-text {
-  background: #f5f5f5;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 10px 10px 0 10px;
-  padding: 12px 18px;
-  max-width: 70%;
-  margin: 5px 0;
-  font-size: 1.05rem;
-  line-height: 1.6;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
-}
-
-.chatbox .incoming .code-block {
-  background: #2d2d2d;
-  color: #f5f5f5;
-  border: 1px solid #444;
-  border-radius: 8px;
-  padding: 12px 18px;
-  max-width: 70%;
-  margin: 5px 0;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  font-family: 'Courier New', monospace;
-  white-space: pre-wrap;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  overflow-x: auto;
-}
-
-/* Remove the chatbot icon from incoming messages */
-.chatbox .incoming {
-  justify-content: flex-end;
-}
-.chatbox .incoming span.material-symbols-outlined {
-  display: none; /* Hide the smart_toy icon */
-}
-
-/* Start Chat UI */
-.start-chat {
-  display: flex;
-  flex-direction: row; /* Ensure cards are side by side */
-  justify-content: center;
-  align-items: center;
-  height: 85vh;
-  width: 100vw;
-  background: #4a4a4a;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1001;
-  transition: opacity 0.3s ease;
-  gap: 20px; /* Space between cards */
-}
-
-.names-container {
-  text-align: center;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  width: 300px;
-  min-height: 300px; /* Consistent height */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.names-container h2 {
-  font-size: 2rem; /* Match "Mate, U Ready?" font size */
-  margin-bottom: 15px;
-  font-weight: 700;
-}
-
-.names-container .names-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.names-container .names-list a {
-  color: #fff;
-  font-size: 1.5rem; /* Proportional to "Dive to the Deep!" */
-  font-weight: 400;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.names-container .names-list a:hover {
-  color: #d8a7b1; /* Match the button color for hover effect */
-}
-
-.start-container {
-  text-align: center;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  width: 300px;
-  min-height: 300px; /* Consistent height */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.start-container h1 {
-  font-size: 2rem;
-  margin-bottom: 15px;
-  font-weight: 700;
-}
-
-.start-container p {
-  font-size: 1.5rem; /* Match names in names-container */
-  font-weight: 400;
-  margin-bottom: 20px;
-}
-
-#start-btn {
-  background: #d8a7b1;
-  border: none;
+.chatbot .chat-input button {
+  flex-shrink: 0;
+  margin-right: 0;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 2rem;
+  background: linear-gradient(135deg, #6b3e7c 60%, #d8a7b1 100%);
   color: #fff;
-  cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease;
+  border: none;
+  width: 48px;
+  height: 48px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 0 auto;
-}
-
-#start-btn:hover {
-  transform: scale(1.1);
-  background: #6b3e7c;
-}
-
-/* Customize the ">" icon appearance */
-#start-btn .material-symbols-outlined {
+  justify-content: center;
   font-size: 2rem;
+  box-shadow: 0 2px 8px rgba(107,62,124,0.15), 0 0 0 4px #fff;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  outline: none;
+  z-index: 1;
+}
+
+.chatbot .chat-input button:hover, .chatbot .chat-input button:focus {
+  background: linear-gradient(135deg, #d8a7b1 60%, #6b3e7c 100%);
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px #d8a7b1, 0 0 0 4px #fff;
+}
+
+/* Hide bot icon in incoming */
+.chatbox .incoming span.material-symbols-outlined {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .start-chat {
+    flex-direction: column;
+    gap: 18px;
+    padding: 18px 0;
+  }
+  .names-container, .start-container {
+    min-width: 90vw;
+    padding: 24px 10vw;
+  }
+  .chatbot header, .chatbot .chat-input {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .chatbot .chatbox {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
