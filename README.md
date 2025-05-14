@@ -18,7 +18,7 @@ The chatbot simulates real-time conversations using JavaScript and a predefined 
 |--------------------|-------------------------|----------------------------------------------------------------------------------|
 | **Eyuel**          | **Team Lead & Developer** | Project planning, overall architecture, core development, and deployment        |
 | Bemnet             | Frontend Developer      | UI/UX design, responsiveness, DOM interactions, and accessibility               |
-| Ferhiwet           | Documentation Manager   | Maintaining the README, developer guides, and internal documentation            |
+| Frehiwet           | Documentation Manager   | Maintaining the README, developer guides, and internal documentation            |
 | Wogari             | Tester & QA             | Testing chatbot flows, reporting bugs, and ensuring cross-browser compatibility |
 | Yididya            | NLP Logic Developer     | Designing the conversation logic, training sets, and intent mapping             |
 
