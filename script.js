@@ -18,25 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
     chatLi.classList.add("chat", className);
 
     if (className === "incoming") {
-      // Clean the message: remove asterisks and markdown
       let cleanMessage = message
-        .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold markdown
-        .replace(/\*/g, '') // Remove all asterisks
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*/g, '')
         .trim();
 
-      // Simple heuristic to detect code: look for common code patterns or backticks
       const hasCode = cleanMessage.match(/```[\s\S]*```/) || 
                      cleanMessage.match(/\b(function|if|for|while|const|let|var)\b/) || 
                      cleanMessage.includes('(') && cleanMessage.includes(')') && cleanMessage.includes('{');
 
       if (hasCode) {
-        // Extract code blocks (between ``` if present, or treat the whole message as code)
         const codeRegex = /```[\s\S]*?```/g;
         const codeBlocks = cleanMessage.match(codeRegex);
         let content = '';
 
         if (codeBlocks) {
-          // Split the message around code blocks
           let remainingText = cleanMessage;
           let lastIndex = 0;
 
@@ -45,46 +41,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const beforeCode = remainingText.substring(lastIndex, codeStart).trim();
 
             if (beforeCode) {
-              // Add non-code text as a paragraph
               content += `<p class="response-text">${beforeCode}</p>`;
             }
 
-            // Add the code block
             const codeContent = block.replace(/```/g, '').trim();
             content += `<pre class="code-block">${codeContent}</pre>`;
             lastIndex = codeStart + block.length;
           });
 
-          // Add any remaining text after the last code block
           const afterCode = remainingText.substring(lastIndex).trim();
           if (afterCode) {
             content += `<p class="response-text">${afterCode}</p>`;
           }
         } else {
-          // If no ``` but code-like content detected, treat the whole message as code
           content = `<pre class="code-block">${cleanMessage}</pre>`;
         }
 
         chatLi.innerHTML = content;
       } else {
-        // For non-code responses, split into paragraphs if there are distinct sections
         const paragraphs = cleanMessage.split(/\n\s*\n/).filter(p => p.trim());
         let content = '';
 
         if (paragraphs.length > 1) {
-          // If there are multiple paragraphs, create separate boxes
           paragraphs.forEach(paragraph => {
             content += `<p class="response-text">${paragraph.trim()}</p>`;
           });
         } else {
-          // Single paragraph, no separation needed
           content = `<p class="response-text">${cleanMessage.replace(/\n/g, ' ').trim()}</p>`;
         }
 
         chatLi.innerHTML = content;
       }
     } else {
-      // For outgoing messages, keep it simple
       chatLi.innerHTML = `<p>${message}</p>`;
     }
 
@@ -109,10 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error.message);
 
-      // Get the response text
       let responseText = data.candidates[0].content.parts[0].text;
       
-      // Recreate the chat element with the formatted response
       const newChatLi = createChatLi(responseText, "incoming");
       chatElement.parentNode.replaceChild(newChatLi, chatElement);
     } catch (error) {
@@ -147,18 +133,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 600);
   };
 
+  // Updated startChatFunction now simply starts the chat without quiz functionality.
   const startChatFunction = () => {
     startChat.style.display = "none";
     chatbot.style.display = "flex";
     chatbox.innerHTML = '';
-    chatbox.appendChild(createChatLi("Hi there 👋 How can I help you today?", "incoming"));
-    chatbox.scrollTo(0, chatbox.scrollHeight);
     chatbot.style.opacity = "0";
     setTimeout(() => {
       chatbot.style.opacity = "1";
     }, 10);
   };
 
+  // Input auto-grow
   chatInput.addEventListener("input", () => {
     chatInput.style.height = `${inputInitHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
@@ -177,4 +163,14 @@ document.addEventListener('DOMContentLoaded', () => {
     startChat.style.display = "flex";
   });
   startBtn.addEventListener("click", startChatFunction);
+
+  const clearBtn = document.querySelector("#clear-chat-btn");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      if (chatbox) {
+        chatbox.innerHTML = "";
+        chatbox.scrollTo(0, 0);
+      }
+    });
+  }
 });

@@ -171,6 +171,13 @@ body {
   align-self: flex-end;
   border-bottom-right-radius: 4px;
   border: 1px solid #e3d0f7;
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  max-width: 70%;
+  margin: 0;
+  line-height: 1.6;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.06);
 }
 
 .chatbox .incoming .code-block {
@@ -241,28 +248,57 @@ body {
   box-shadow: 0 4px 16px #d8a7b1, 0 0 0 4px #fff;
 }
 
-/* Hide bot icon in incoming */
-.chatbox .incoming span.material-symbols-outlined {
-  display: none;
+/* Chat Actions */
+.chat-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-start;
+  padding: 0 32px 24px 32px;
+  margin-top: 0;
 }
 
-/* Responsive */
-@media (max-width: 700px) {
-  .start-chat {
-    flex-direction: column;
-    gap: 18px;
-    padding: 18px 0;
-  }
-  .names-container, .start-container {
-    min-width: 90vw;
-    padding: 24px 10vw;
-  }
-  .chatbot header, .chatbot .chat-input {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-  .chatbot .chatbox {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
+.chat-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #f3e8ff 60%, #e0e7ef 100%);
+  color: #6b3e7c;
+  border: 1.5px solid #d8a7b1;
+  border-radius: 22px;
+  padding: 10px 22px;
+  font-size: 1.08rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(107,62,124,0.08);
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s, transform 0.15s;
+  outline: none;
+}
+
+.chat-action-btn:hover, .chat-action-btn:focus {
+  background: linear-gradient(135deg, #d8a7b1 60%, #f3e8ff 100%);
+  color: #4a2563;
+  border: 1.5px solid #6b3e7c;
+  box-shadow: 0 4px 16px rgba(107,62,124,0.15);
+}
+
+/* Only code blocks get the dark background */
+.code-block, pre, code {
+  background: #23272f;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  font-size: 1rem;
+  margin: 12px 0;
+  display: block;
+  overflow-x: auto;
+}
+
+/* Remove any dark background from general response text */
+.response-text {
+  background: transparent;
+  color: #222;
+  padding: 0;
+  border-radius: 0;
+  font-family: inherit;
 }
