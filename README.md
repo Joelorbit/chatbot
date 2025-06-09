@@ -1,9 +1,6 @@
 # 🤖 AI Chatbot - Team Project
 
 Welcome to our AI Chatbot project! This web-based chatbot leverages natural language processing to interact with users in a human-like manner. The project was developed as a collaborative effort among team members with clear responsibilities, ensuring modularity and high-quality output.
-
-🌐 **Live Demo:** [joelorbit.github.io/chatbot](https://joelorbit.github.io/chatbot/)
-
 ---
 
 ## 🧠 Project Overview
